@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>DVD Ripper</title>
+<link rel="stylesheet" href="/static/style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📀</text></svg>">
+</head>
+<body>
+<header>
+  <h1>📀 DVD Ripper</h1>
+  <div id="disk" class="statrow"></div>
+  <div id="notify" class="statrow"></div>
+</header>
+
+<main>
+  <section id="drives"></section>
+
+  <section id="backfill-box" class="hidden">
+    <div class="card subtle" id="backfill"></div>
+  </section>
+
+  <details id="events-box">
+    <summary>Recent events</summary>
+    <ul id="events"></ul>
+  </details>
+
+  <section>
+    <div class="rowhead">
+      <h2>Library</h2>
+      <button id="backfill-btn" title="Generate sidecars for ISOs missing them">Backfill</button>
+    </div>
+    <div id="history"></div>
+  </section>
+
+  <details id="census-box">
+    <summary>Census — feature prevalence</summary>
+    <p class="muted">Features seen across all discs with a census sidecar.
+       Rows with exactly one disc are <span class="novel">novel</span>.</p>
+    <div id="census"></div>
+  </details>
+</main>
+
+<div id="lightbox" class="hidden"><img id="lightbox-img" alt=""></div>
+<script src="/static/app.js"></script>
+</body>
+</html>

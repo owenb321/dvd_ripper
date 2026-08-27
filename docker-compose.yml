@@ -1,0 +1,32 @@
+# docker-compose.yml
+#
+# Edit the `devices:` list to match the optical drives on your host
+# (check with `ls /dev/sr*`), and mirror the same list in DVD_DEVICES.
+#
+# Usage:
+#   docker compose up -d --build
+#   docker compose logs -f
+#   open http://<host>:8080
+services:
+  dvd-ripper:
+    build: .
+    container_name: dvd-ripper
+    restart: unless-stopped
+    devices:
+      - /dev/sr0:/dev/sr0
+      - /dev/sr1:/dev/sr1
+      - /dev/sr2:/dev/sr2
+    ports:
+      - "8080:8080"
+    environment:
+      DVD_DEVICES: "/dev/sr0 /dev/sr1 /dev/sr2"
+      POLL_INTERVAL: "5"
+      DUPLICATE_POLICY: "skip"          # skip | rip
+      # ES_SCAN: "0"                    # skip the video-stream census
+      #                                 # (captions + picture coding); the
+      #                                 # IFO census always runs
+      # DISCORD_WEBHOOK_URL: "https://discord.com/api/webhooks/..."
+      # NOTIFY_EVENTS: "rip_complete,disc_error,duplicate,disk_space_low,backfill_done"
+    volumes:
+      - /mnt/rips:/mnt/rips
+      - /run/udev:/run/udev:ro

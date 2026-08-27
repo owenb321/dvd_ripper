@@ -1,0 +1,23 @@
+# Bare-metal systemd unit (Option B). Install:
+#   sudo cp -r ripper vendor /opt/dvd-ripper/
+#   sudo cp dvd-ripper.service /etc/systemd/system/
+#   sudo systemctl daemon-reload && sudo systemctl enable --now dvd-ripper
+# Deps: apt install dvdbackup genisoimage libdvd-pkg util-linux udev eject \
+#                   python3 python3-flask ffmpeg
+#       sudo dpkg-reconfigure libdvd-pkg
+[Unit]
+Description=DVD auto-ripper with web UI
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/dvd-ripper
+ExecStart=/usr/bin/python3 -m ripper.main
+Environment=DVD_DEVICES=/dev/sr0 /dev/sr1 /dev/sr2
+Environment=OUTPUT_DIR=/mnt/rips
+Environment=PORT=8080
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
